@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算法 v2 技术文档 - Atmosphere</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; display: flex; min-height: 100vh; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .sidebar { width: 280px; min-width: 280px; background: #f8f8f8; border-right: 1px solid #e0e0e0; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; }
+        .sidebar-header { padding: 0 24px 24px; border-bottom: 1px solid #e0e0e0; margin-bottom: 16px; }
+        .sidebar-header a { font-size: 16px; font-weight: 600; color: #333; }
+        .sidebar-section { margin-bottom: 8px; }
+        .sidebar-section-title { padding: 8px 24px; font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; }
+        .sidebar-section a { display: block; padding: 8px 24px; font-size: 14px; color: #333; }
+        .sidebar-section a:hover { background: #eee; text-decoration: none; }
+        .sidebar-section a.active { background: #e0e0e0; color: #0066cc; }
+        .main-content { flex: 1; margin-left: 280px; padding: 60px 80px; max-width: 900px; }
+        .section h2 { font-size: 28px; font-weight: 600; margin-bottom: 24px; color: #111; }
+        .section h3 { font-size: 18px; font-weight: 600; margin: 24px 0 12px; color: #111; }
+        .section h4 { font-size: 16px; font-weight: 600; margin: 16px 0 8px; color: #111; }
+        .section p { font-size: 15px; color: #444; margin-bottom: 12px; }
+        .section ul { margin: 12px 0; padding-left: 24px; }
+        .section li { margin-bottom: 8px; font-size: 15px; color: #444; }
+        .code-block { background: #f8f8f8; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 14px; overflow-x: auto; line-height: 1.6; white-space: pre; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+        th, td { border: 1px solid #eee; padding: 10px 14px; text-align: left; }
+        th { background: #f8f8f8; font-weight: 600; }
+        .github-link { position: fixed; bottom: 24px; right: 24px; z-index: 100; }
+        .github-link a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; color: #333; background: #fff; }
+        .github-link a:hover { border-color: #333; background: #f5f5f5; text-decoration: none; }
+        @media (max-width: 1024px) { .sidebar { display: none; } .main-content { margin-left: 0; padding: 0 40px 40px; } }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="index.html">Atmosphere</a></div>
+        <div class="sidebar-section">
+            <a href="index.html">主页</a>
+            <a href="intro.html">简介</a>
+            <a href="features.html">优势</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">硬件与模型</div>
+            <a href="hardware.html">硬件方案</a>
+            <a href="model.html">预警模型</a>
+            <a href="quickstart.html">快速开始</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">文档</div>
+            <a href="structure.html">项目结构</a>
+            <a href="history.html">版本历史</a>
+            <a href="docs.html">文档索引</a>
+            <a href="limitations.html">已知限制</a>
+            <a href="faq.html">常见问题</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">开发</div>
+            <a href="development.html">二次开发</a>
+            <a href="contributing.html">贡献</a>
+            <a href="contact.html">联系我们</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">技术文档</div>
+            <a href="algorithm-v1.html">算法 v1</a>
+            <a href="algorithm-v2.html" class="active">算法 v2</a>
+            <a href="weather.html">风速+温湿度</a>
+        </div>
+    </aside>
+    <div class="github-link"><a href="https://github.com/liangaustin/Atmosphere" target="_blank"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub</a></div>
+    <main class="main-content">
+        <div class="section">
+            <h2>数学预警模型 · 第二版技术文档</h2>
+            <p><strong>版本：</strong>v2（第二版）<br><strong>算法名称：</strong>传感器标定对齐 + 快速滑动基准预警模型</p>
+
+            <h3>一、v2 相对 v1 的改动</h3>
+            <table>
+                <thead><tr><th>项目</th><th>v1</th><th>v2</th><th>原因</th></tr></thead>
+                <tbody>
+                    <tr><td>预警等级命名</td><td>1=三级 / 3=一级</td><td>0=正常 / 1=一级 / 2=二级 / 3=三级</td><td>等级体系规范：数字越大越严重</td></tr>
+                    <tr><td>泥石流权重</td><td>0.40S+0.30Q+0.20dQ+0.10ΔS</td><td>0.30S+0.35Q+0.20dQ+0.15ΔS</td><td>土壤易饱和降权重；流量升最高权重</td></tr>
+                    <tr><td>Q_MAX</td><td>30 L/min</td><td>3 L/min</td><td>对齐 YF-S401 实测量程</td></tr>
+                    <tr><td>DQ_MAX</td><td>5 L/min/s</td><td>0.5 L/min/s</td><td>实测秒级跳变 ~0.3</td></tr>
+                    <tr><td>冷启动</td><td>2 小时</td><td>15 分钟</td><td>更快自适应当地气候</td></tr>
+                </tbody>
+            </table>
+
+            <h3>二、算法结构</h3>
+            <div class="code-block">最终等级 = max(泥石流 D, 山洪 F, 风速, 流量尖峰, 突变, 土壤饱和)   ← 0~3</div>
+            <table>
+                <thead><tr><th>等级</th><th>含义</th><th>触发示例</th></tr></thead>
+                <tbody>
+                    <tr><td>0</td><td>正常</td><td>各因子均低于阈值</td></tr>
+                    <tr><td>1</td><td>一级预警（最轻）</td><td>D/F ≥ 0.45，或风速 ≥25 km/h</td></tr>
+                    <tr><td>2</td><td>二级预警</td><td>D/F ≥ 0.55，或风速 ≥40 km/h</td></tr>
+                    <tr><td>3</td><td>三级预警（最严重）</td><td>D/F ≥ 0.75，或风速 ≥60 km/h</td></tr>
+                </tbody>
+            </table>
+
+            <h4>1. 泥石流路径</h4>
+            <div class="code-block">D = 0.30 × S̄ + 0.35 × Q̄ + 0.20 × dQ̄ + 0.15 × ΔS̄</div>
+            <p>土壤 <60% 时跳过（山洪/风速不受限）。</p>
+
+            <h4>2. 山洪路径（独立指数）</h4>
+            <div class="code-block">F = 0.60 × Q̄ + 0.40 × dQ̄</div>
+            <p>不受土壤门槛限制，流量暴涨即触发。</p>
+
+            <h4>3. 风速路径</h4>
+            <p>≥25 km/h → 一级；≥40 km/h → 二级；≥60 km/h → 三级。</p>
+
+            <h4>4. 流量尖峰路径</h4>
+            <p>秒级变化率超当地历史 P95 → 二级；≥0.8 归一化 → 一级。</p>
+
+            <h4>5. 突变路径（秒级响应）</h4>
+            <p>土壤 5 秒内涨 ≥20% / 风速 60 秒内涨 ≥12 km/h → 立即一级。</p>
+
+            <h4>6. 土壤饱和路径（v2 新增）</h4>
+            <p>土壤 ≥85% 或超当地 P90 → 至少一级（不依赖流量）。</p>
+
+            <h4>7. 滞回保持（v2 新增，防抖）</h4>
+            <p>升级立即生效；降级需超过保持时间 —— 一级 10 秒 / 二级 15 秒 / 三级 20 秒。</p>
+
+            <h3>三、LCD 显示（v2 新增）</h3>
+            <div class="code-block">W12.3 S45% F0.50     ← 风速 km/h · 土湿度 % · 水流速 L/min
+ALARM:3 L3           ← 预警等级 0~3（0=正常，3=三级最严重）</div>
+
+            <h3>四、优势</h3>
+            <ul>
+                <li>流量数据真正参与推理：标定参数对齐传感器量程后，Q̄/dQ̄ 变成有效因子</li>
+                <li>滑动基准快速启用：15 分钟冷启动</li>
+                <li>等级体系规范：0~3 数字越大越严重</li>
+                <li>现场可视化：LCD 实时显示四路核心数据</li>
+                <li>诊断能力：脉冲双向沿计数 + 电平输出</li>
+            </ul>
+
+            <h3>五、缺陷</h3>
+            <ul>
+                <li>流量计量程仍窄（YF-S401 仅 0.05~3 L/min）</li>
+                <li>风速数据依赖外部电脑（192.168.1.200:8001）</li>
+                <li>滑动基准 15 分钟仍可能不够稳</li>
+                <li>突变阈值仍是经验值</li>
+                <li>LCD 仅 ASCII，无法显示中文</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

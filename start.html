@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档 - Atmosphere</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: #f8f8f8;
+            border-right: 1px solid #e0e0e0;
+            padding: 24px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: #f8f8f8;
+            border-right: 1px solid #e0e0e0;
+            padding: 24px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-header a {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .sidebar-section {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-section-title {
+            padding: 8px 24px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-section a {
+            display: block;
+            padding: 8px 24px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .sidebar-section a:hover {
+            background: #eee;
+            text-decoration: none;
+        }
+
+        .sidebar-section a.active {
+            background: #e0e0e0;
+            color: #0066cc;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 60px 80px;
+            max-width: 1200px;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #111;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 24px 0 12px;
+            color: #111;
+        }
+
+        .section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 16px 0 8px;
+            color: #111;
+        }
+
+        .section p {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 16px;
+        }
+
+        .section ul {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .highlight {
+            color: #0066cc;
+            font-weight: 500;
+        }
+
+        .warning {
+            background: #f8f8f8;
+            border-left: 3px solid #ccc;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #eee;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        th {
+            background: #f8f8f8;
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            line-height: 1.8;
+            white-space: pre;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .feature-card {
+            padding: 24px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .doc-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .doc-item {
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .doc-item h3 {
+            margin: 0 0 8px;
+            font-size: 15px;
+        }
+
+        .doc-item p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item h3 {
+            margin: 0 0 8px;
+            font-size: 15px;
+        }
+
+        .faq-item p {
+            margin: 0;
+        }
+
+        .welcome-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 0 80px 0;
+        }
+
+        .welcome-section h1 {
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #111;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            color: #666;
+            max-width: 500px;
+        }
+
+        .foldable {
+            margin-bottom: 8px;
+        }
+
+        .foldable-title {
+            display: flex;
+            align-items: center;
+            padding: 8px 24px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .foldable-title:hover {
+            background: #eee;
+        }
+
+        .foldable-title::before {
+            content: "▶";
+            font-size: 10px;
+            margin-right: 8px;
+            transition: transform 0.2s;
+        }
+
+        .foldable.open .foldable-title::before {
+            transform: rotate(90deg);
+        }
+
+        .foldable-content {
+            display: none;
+            padding-left: 16px;
+        }
+
+        .foldable.open .foldable-content {
+            display: block;
+        }
+
+        .foldable-content a {
+            display: block;
+            padding: 8px 24px 8px 40px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .foldable-content a:hover {
+            background: #eee;
+            text-decoration: none;
+        }
+
+        .github-link {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+        }
+
+        .github-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #333;
+            background: #fff;
+        }
+
+        .github-link a:hover {
+            border-color: #333;
+            background: #f5f5f5;
+            text-decoration: none;
+        }
+
+        @media (max-width: 1024px) {
+            .wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 60px 40px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html">← 返回首页</a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">基础</div>
+            <a href="#intro">简介</a>
+            <a href="#features">优势</a>
+            <a href="#hardware">硬件方案</a>
+            <a href="#model">预警模型</a>
+            <a href="#quickstart">快速开始</a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">文档</div>
+            <a href="#structure">项目结构</a>
+            <a href="#history">版本历史</a>
+            <a href="#docs">文档索引</a>
+            <a href="#limitations">已知限制</a>
+            <a href="#faq">常见问题</a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">开发</div>
+            <a href="#development">二次开发</a>
+            <a href="#contributing">贡献</a>
+            <a href="#contact">联系我们</a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">demo1 开发文档</div>
+            <div class="foldable">
+                <div class="foldable-title">demo1 开发文档</div>
+                <div class="foldable-content">
+                    <a href="#beta1">beta1 技术文档</a>
+                    <a href="#beta2">beta2 技术文档</a>
+                    <a href="#beta3">beta3 技术文档</a>
+                    <a href="#beta4">beta4 技术文档</a>
+                    <a href="#beta5">beta5 技术文档</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">技术文档</div>
+            <a href="#algorithm-v1">算法 v1</a>
+            <a href="#algorithm-v2">算法 v2</a>
+            <a href="#weather">风速+温湿度</a>
+        </div>
+    </aside>
+
+    <div class="github-link">
+        <a href="https://github.com/liangaustin/Atmosphere" target="_blank">
+            <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+        </a>
+    </div>
+
+    <main class="main-content">
+        <div class="welcome-section">
+            <h1>开始</h1>
+            <p>欢迎来到开始！这里有我们项目的所有文档可供参阅。</p>
+        </div>
+
+        <div class="section" id="intro">
+            <h2>简介</h2>
+            <p><strong>Atmosphere</strong> 是一套面向<span class="highlight">民间自发漂流活动与野外游泳区域</span>的低成本、高实效智能监测预警系统。</p>
+            <p>它通过部署在溪流/漂流点的传感器单元，实时采集<span class="highlight">土壤湿度、水流速、风速、温湿度</span>等环境数据，用多因子数学模型判定山洪与泥石流风险等级（<span class="highlight">0~3 级</span>），并通过<span class="highlight">网页监控 + 现场 LCD</span> 双端呈现，在危险来临前为现场人员争取撤离时间。</p>
+            <div class="warning">
+                ⚠️ 本系统是辅助决策工具，不替代救生员与现场安全管理。山洪预警的黄金法则是上游预警——请结合上游雨量/水位遥测站构成完整预警链。
+            </div>
+        </div>
+
+        <div class="section" id="features">
+            <h2>优势</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>实时监测</h3>
+                    <p>多传感器同步采集土壤湿度、水流速、风速、温湿度等环境数据</p>
+                </div>
+                <div class="feature-card">
+                    <h3>智能预警</h3>
+                    <p>多因子数学模型判定山洪与泥石流风险等级（0~3级）</p>
+                </div>
+                <div class="feature-card">
+                    <h3>双端呈现</h3>
+                    <p>网页监控+现场LCD双通道预警，确保信息及时送达</p>
+                </div>
+                <div class="feature-card">
+                    <h3>低成本</h3>
+                    <p>采用开源硬件方案，适合民间自发漂流活动区域部署</p>
+                </div>
+                <div class="feature-card">
+                    <h3>高时效</h3>
+                    <p>在危险来临前为现场人员争取宝贵撤离时间</p>
+                </div>
+                <div class="feature-card">
+                    <h3>易部署</h3>
+                    <p>模块化设计，快速部署于溪流、漂流点及野外游泳区域</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="hardware">
+            <h2>硬件方案</h2>
+            <p>传感器单元单点成本约 300-400 元，包含以下组件：</p>
+            <table>
+                <thead>
+                    <tr><th>部件</th><th>型号</th><th>接线</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>主控 MCU</td><td>Arduino Nano（ATmega328P，115200）</td><td>FQBN arduino:avr:nano:cpu=atmega328</td></tr>
+                    <tr><td>土壤湿度</td><td>电容式</td><td>AO→A2，DO→D2</td></tr>
+                    <tr><td>水流速</td><td>YF-S401 霍尔流量计</td><td>红→5V，黄→D8，黑→GND</td></tr>
+                    <tr><td>风速</td><td>三杯式风速计</td><td>红→A0，黑→GND</td></tr>
+                    <tr><td>温湿度</td><td>DHT11</td><td>s→D4</td></tr>
+                    <tr><td>现场显示</td><td>1602 I2C（地址 0x27）</td><td>SCL→A5，SDA→A4</td></tr>
+                </tbody>
+            </table>
+            <div class="warning">
+                ⚠️ 供电铁律：水泵必须独立供电（单独 5V 电源，只共地）。从 Arduino 5V 取电会拉垮 5V → CH340 掉电 → 板子复位断联。
+            </div>
+        </div>
+
+        <div class="section" id="model">
+            <h2>预警模型</h2>
+            <p>等级体系（数字越大越严重）：<span class="highlight">0 = 正常 / 1 = 一级 / 2 = 二级 / 3 = 三级</span></p>
+            <div class="code-block">最终等级 = max(泥石流 D, 山洪 F, 风速, 流量尖峰, 突变, 土壤饱和)   ← 0~3
+
+泥石流 D = 0.30·S̄ + 0.35·Q̄ + 0.20·dQ̄ + 0.15·ΔS̄   （土壤 <60% 时跳过）
+山洪 F = 0.60·Q̄ + 0.40·dQ̄                         （流量暴涨即触发）
+
+阈值：D/F ≥ 0.45 → 一级；≥ 0.55 → 二级；≥ 0.75 → 三级</div>
+            <h3>滑动基准</h3>
+            <p>24h 窗口 [P10,P95] 归一化，冷启动 15 分钟。</p>
+            <h3>滞回防抖</h3>
+            <p>预警触发后保持（一级 10s / 二级 15s / 三级 20s），避免等级闪烁。</p>
+            <p>详细技术文档：<a href="#algorithm-v1">算法 v1</a> | <a href="#algorithm-v2">算法 v2</a></p>
+        </div>
+
+        <div class="section" id="quickstart">
+            <h2>快速开始</h2>
+            <div class="code-block"># 1. 烧录固件（Arduino IDE，板卡 Nano + 新 Bootloader，115200）
+#    demo1/zh-CN/第二版算法部分/beta5/FlowSensor.ino
+
+# 2. 启动服务端（串口）
+cd demo1/zh-CN/第二版算法部分/beta5/
+python3 -u server.py
+
+# 3. 打开网页
+http://localhost:8080</div>
+        </div>
+
+        <div class="section" id="structure">
+            <h2>项目结构</h2>
+            <div class="code-block">Atmosphere/
+├── README.md                  # 本文件
+├── README_CLASSIC.md          # 旧版 README 存档
+├── demo1/                     # Demo 1：算法归档 + 文档
+│   ├── zh-CN/                # 中文版
+│   ├── en-US/                # 英文版
+│   ├── algorithm-iterations/  # 数学预警模型技术文档
+│   ├── weather/               # 风速 + 温湿度模块
+│   └── media/                # 演示图片与视频
+├── AustinLiang/              # 梁振宇工作区
+├── wanglihui/               # 王立辉工作区
+└── GJJ/                     # 团队成员工作区</div>
+        </div>
+
+        <div class="section" id="history">
+            <h2>版本历史</h2>
+            <table>
+                <thead>
+                    <tr><th>版本</th><th>算法</th><th>核心改动</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>beta1</td><td>v1</td><td>原始算法 D<0.30 无门槛；水泵 D7 数字开关</td></tr>
+                    <tr><td>beta2</td><td>v1</td><td>加门槛（土壤<60%）+ 三级阈值 0.30→0.45</td></tr>
+                    <tr><td>beta3</td><td>v1</td><td>水泵 D9 PWM 调速 + 网页滑块 + 功率显示</td></tr>
+                    <tr><td>beta4</td><td>v1</td><td>尖峰滑动基准（自适应 P95）+ 整机功率</td></tr>
+                    <tr><td>beta5</td><td>v2</td><td>LCD 显示 + 算法 v2 + 滞回防抖 + 土壤饱和</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section" id="docs">
+            <h2>文档索引</h2>
+            <div class="doc-list">
+                <div class="doc-item">
+                    <h3>demo1 详细导航</h3>
+                    <p>目录结构、快速开始、版本历史</p>
+                </div>
+                <div class="doc-item">
+                    <h3>数学预警模型技术文档</h3>
+                    <p>v1/v2 技术文档，中英双语，含优势/缺陷/迭代记录</p>
+                </div>
+                <div class="doc-item">
+                    <h3>风速 + 温湿度模块</h3>
+                    <p>王立辉，网络服务 + Arduino 代码</p>
+                </div>
+                <div class="doc-item">
+                    <h3>演示图片与视频</h3>
+                    <p>demo1/media/ 目录下</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="limitations">
+            <h2>已知限制</h2>
+            <div class="faq-item">
+                <h3>流量计量程窄</h3>
+                <p>YF-S401 实测 0.05~3 L/min，真实洪水流量超量程——v2 标定参数面向当前测试环境，换环境需重新标定。</p>
+            </div>
+            <div class="faq-item">
+                <h3>突变阈值为经验值</h3>
+                <p>土壤 5s+20%、风速 60s+12km/h 未做统计标定。</p>
+            </div>
+            <div class="faq-item">
+                <h3>LCD 仅 ASCII</h3>
+                <p>1602 无中文字库，现场人员需熟悉 0~3 数字含义。</p>
+            </div>
+            <div class="faq-item">
+                <h3>硬阈值分级</h3>
+                <p>0.45/0.55/0.75 阶梯跳变，无置信度/持续性判定（滞回已缓解闪断）。</p>
+            </div>
+        </div>
+
+        <div class="section" id="faq">
+            <h2>常见问题</h2>
+            <div class="faq-item">
+                <h3>Q1：水泵一开 Arduino 就重启/断连？</h3>
+                <p>水泵不能从 Arduino 5V 取电（会拉垮 5V → CH340 掉电 → 板子复位）。必须独立 5V 电源，GND 与 Arduino 共地，D9 只发 PWM 信号。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q2：LCD 不亮 / 花屏？</h3>
+                <p>① 检查 I2C 地址（默认 0x27）；② 确认 SCL→A5、SDA→A4 没接反；③ 旋转背光电位器调对比度。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q3：流速一直为 0？</h3>
+                <p>YF-S401 最小启动流量 0.3 L/min，低于此值转子不转（吹气测不了，必须通水）。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q4：风速数值异常 / 静止也有读数？</h3>
+                <p>三杯式风速计部分型号存在零点偏移，可在固件里做零点校准。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q5：预警一直不触发？</h3>
+                <p>① 土壤 <60% 时泥石流路径跳过（正常）；② 滑动基准冷启动需 15 分钟；③ 检查 D/F 数值是否在阈值附近（0.45/0.55/0.75）。</p>
+            </div>
+        </div>
+
+        <div class="section" id="development">
+            <h2>二次开发</h2>
+            <h3>算法迭代</h3>
+            <p>新算法版本在 demo1/algorithm-iterations/ 归档，每代一份技术文档（优势 / 缺陷 / 特点），随迭代更新。</p>
+            <h3>固件</h3>
+            <p>FlowSensor.ino 模块化，新增传感器 = 加引脚定义 + 每秒块加采集 + JSON 加字段。</p>
+            <h3>服务端</h3>
+            <p>server.py 内嵌网页 + 预警模型，五路径独立计算，可单独迭代。</p>
+        </div>
+
+        <div class="section" id="contributing">
+            <h2>贡献</h2>
+            <p>欢迎提交 Issue 与 PR。涉及硬件接线、标定参数、算法阈值的改动，请在提交前更新对应文档（demo1/algorithm-iterations/）。本项目为教学 / 竞赛 / 公益性质，文档一律不署名。</p>
+        </div>
+
+        <div class="section" id="contact">
+            <h2>联系我们</h2>
+            <p>如需联系开发团队，请发送电子邮件到：<a href="mailto:liangaustin@hotmail.com">liangaustin@hotmail.com</a></p>
+            <p style="margin-top:40px;font-size:13px;color:#666;">Copyright © Thin-Wave-Is-In-The-Atmosphere 2026-2027</p>
+        </div>
+
+        <div class="section" id="beta1">
+            <h2>beta1 技术文档</h2>
+            <h3>一、项目简介</h3>
+            <p>Atmosphere 是面向野外溪流/漂流点的山洪 + 泥石流智能监测预警系统。Demo 1 实现：土壤湿度、流速、风速三路环境采集 + 水泵控制 + Web 实时监控 + 预警数学模型。</p>
+            <h3>二、硬件连接方式</h3>
+            <ul>
+                <li>主控：Arduino Nano（ATmega328P，新 Bootloader）</li>
+                <li>土壤湿度传感器：AO→A2（模拟量），DO→D2（数字/断线检测），VCC→5V，GND→GND</li>
+                <li>流速传感器 YF-S401：红线→5V，黄线→D8（信号），黑线→GND</li>
+                <li>水泵：接 D7（高电平抽水，低电平停止）</li>
+                <li>风速传感器（三杯式，0~5V）：接另一台电脑的 Arduino UNO A0，经 HTTP 转发到本机</li>
+            </ul>
+            <h3>三、软件实现</h3>
+            <p>两个文件：FlowSensor.ino —— Arduino 固件；server.py —— Python Web 服务（端口 8080）。串口命令：发送 1 开泵 / 0 关泵。</p>
+            <h3>四、预警模型</h3>
+            <p>泥石流危险指数 D = 0.40·S̄ + 0.30·Q̄ + 0.20·dQ̄ + 0.10·ΔS̄</p>
+            <p>预警档位：🟢 正常：D < 0.30；🟡 三级预警：0.30 ≤ D < 0.55；🟠 二级预警：0.55 ≤ D < 0.75；🔴 一级预警：D ≥ 0.75</p>
+            <h3>五、运行方式</h3>
+            <p>编译上传 FlowSensor.ino → 运行 python3 -u server.py → 浏览器打开 http://localhost:8080</p>
+            <h3>六、已知问题</h3>
+            <p>水泵从 Arduino 取电会导致供电不稳；山洪曼宁 70% 缺超声波水位传感器；尖峰检测阈值待实测标定。</p>
+        </div>
+
+        <div class="section" id="beta2">
+            <h2>beta2 技术文档</h2>
+            <h3>一、项目简介</h3>
+            <p>Atmosphere Demo 1 第二版，在 beta1 基础上增加土壤湿度门槛。</p>
+            <h3>二、硬件连接方式</h3>
+            <p>同 beta1。</p>
+            <h3>三、预警模型</h3>
+            <p>新增门槛：土壤湿度 < 60%（土体未饱和）直接判安全，不参与 D 分级。</p>
+            <p>预警档位：🟢 正常：D < 0.45（土壤湿度 < 60% 时直接安全）；🟡 三级预警：0.45 ≤ D < 0.55；🟠 二级预警：0.55 ≤ D < 0.75；🔴 一级预警：D ≥ 0.75</p>
+            <h3>四、运行方式</h3>
+            <p>同 beta1。</p>
+            <h3>五、已知问题</h3>
+            <p>水泵从 Arduino 取电会导致供电不稳；山洪曼宁 70% 缺超声波水位传感器；尖峰检测阈值待实测标定。</p>
+        </div>
+
+        <div class="section" id="beta3">
+            <h2>beta3 技术文档</h2>
+            <h3>一、项目简介</h3>
+            <p>Demo 1 第三版，新增水泵 PWM 调速控制。</p>
+            <h3>二、硬件连接方式</h3>
+            <p>水泵改为 IO 接 D9（PWM 脚，软启动/调速）；VCC/GND 接电源，D7 已拉低兜底。</p>
+            <h3>三、软件实现</h3>
+            <p>水泵调速：D9 PWM + 软启动（0→255 约 0.5 秒平滑升/降）；网页滑块：0~100% 拖动实时调速（150ms 防抖）；功率 = 占空比 × 满载功率。</p>
+            <h3>四、预警模型</h3>
+            <p>同 beta2（新增土壤门槛）。</p>
+            <h3>五、运行方式</h3>
+            <p>编译上传 FlowSensor.ino → 运行 python3 -u server.py → 浏览器打开 http://localhost:8080，拖滑块调节水泵速度。</p>
+            <h3>六、已知问题</h3>
+            <p>水泵高速时电流大仍会拉垮 5V 断电复位（软启动只缓解启动冲击）；功率为估算值（无电流传感器）。</p>
+        </div>
+
+        <div class="section" id="beta4">
+            <h2>beta4 技术文档（Demo 1 最终版）</h2>
+            <h3>一、项目简介</h3>
+            <p>Demo 1 最终版，在 beta3 基础上增加尖峰滑动基准自适应。</p>
+            <h3>二、硬件连接方式</h3>
+            <p>同 beta3。</p>
+            <h3>三、软件实现</h3>
+            <p>新增整机功率显示：固定功耗 0.4W + 占空比 × 水泵满载功率。尖峰检测改用滑动基准自适应，超当地 P95 判高风险。</p>
+            <h3>四、预警模型</h3>
+            <p>尖峰检测：改用滑动基准自适应，回退固定阈值（2.0 L/min/s）仍需实测标定。</p>
+            <h3>五、版本状态</h3>
+            <p><strong>Demo 1 最终版</strong>：后续开发转入 Demo 2（新增超声波水位传感器，补全山洪曼宁 70% 分量）。</p>
+            <h3>六、已知问题</h3>
+            <p>整机功率为估算值（无电流传感器）；山洪曼宁 70% 缺超声波水位传感器；尖峰滑动基准已落地，固定阈值仍需实测标定。</p>
+        </div>
+
+        <div class="section" id="beta5">
+            <h2>beta5 技术文档（算法 v2 第一版归档）</h2>
+            <h3>一、项目简介</h3>
+            <p>beta5 为<strong>第二版算法（v2）</strong>的第一版归档：在 beta4 基础上新增 LCD 现场显示、算法升级到 v2（传感器标定对齐 + 快速滑动基准 + 滞回保持 + 土壤饱和规则）。</p>
+            <h3>二、硬件连接方式</h3>
+            <ul>
+                <li>主控：Arduino Nano（ATmega328P，新 Bootloader）</li>
+                <li>土壤湿度传感器：AO→A2，DO→D2</li>
+                <li>流速传感器 YF-S401：红线→5V，黄线→D8，黑线→GND</li>
+                <li>水泵：IO 接 D9（建议独立供电只共地）</li>
+                <li>温湿度 DHT11：v→5V，s→D4，g→GND</li>
+                <li>LCD 1602（I2C）：SCL→A5，SDA→A4，地址 0x27</li>
+            </ul>
+            <h3>三、软件实现</h3>
+            <p>FlowSensor.ino（115200）：三路采集 + 水泵 PWM 调速 + LCD 显示；server.py（8080）：串口读取 + 风速 HTTP 集成 + v2 预警模型 + 网页。</p>
+            <h3>四、预警模型（算法 v2）</h3>
+            <p><strong>等级体系：0 = 正常 / 1 = 一级 / 2 = 二级 / 3 = 三级（最高）</strong></p>
+            <p>最终等级 = max(泥石流 D, 山洪 F, 风速, 流量尖峰, 突变, 土壤饱和)</p>
+            <p>泥石流：D = 0.30·S̄ + 0.35·Q̄ + 0.20·dQ̄ + 0.15·ΔS̄（门槛：土壤 < 60% 时跳过）</p>
+            <p>山洪：F = 0.60·Q̄ + 0.40·dQ̄（不受土壤门槛限制）</p>
+            <p>风速：≥25 km/h → 一级；≥40 km/h → 二级；≥60 km/h → 三级</p>
+            <p><strong>新增：土壤饱和路径</strong>（土壤 ≥85% 或超当地 P90 → 至少一级）</p>
+            <p><strong>新增：滞回保持</strong>（一级 10s / 二级 15s / 三级 20s 防抖）</p>
+            <p>冷启动 15 分钟。</p>
+            <h3>五、运行方式</h3>
+            <p>1. 编译上传 FlowSensor.ino（115200）；2. 运行 python3 -u server.py；3. 浏览器打开 http://localhost:8080</p>
+            <h3>六、版本状态</h3>
+            <p>beta5 为<strong>算法 v2 的第一版归档</strong>：Demo 1 完结后进入算法迭代阶段。</p>
+            <h3>七、已知问题</h3>
+            <p>风速数据依赖外部电脑（192.168.1.200:8001）；流量计量程窄（0.05~3 L/min）；LCD 仅 ASCII。</p>
+        </div>
+
+        <div class="section" id="algorithm-v1">
+            <h2>算法 v1 技术文档</h2>
+            <p><strong>版本：</strong>v1（第一版）<br><strong>算法名称：</strong>风速基准线 + 滑动基准预警模型</p>
+
+            <h3>一、算法总览</h3>
+            <p>本版算法由 5 条独立预警路径组成，每秒计算一次，最终等级取各路径最高值：</p>
+            <div class="code-block">最终等级 = max(泥石流 D, 山洪 F, 风速, 流量尖峰, 突变)
+
+等级定义：0 = 正常 / 1 = 三级预警 / 2 = 二级预警 / 3 = 一级预警（一级最严重）</div>
+
+            <h3>二、五条预警路径</h3>
+            <h4>1. 泥石流路径（四因子加权）</h4>
+            <div class="code-block">D = 0.30 × S̄ + 0.35 × Q̄ + 0.20 × dQ̄ + 0.15 × ΔS̄</div>
+            <table>
+                <thead><tr><th>因子</th><th>含义</th><th>归一化方式</th></tr></thead>
+                <tbody>
+                    <tr><td>S̄</td><td>土壤湿度水平</td><td>滑动基准 [P10,P95] 归一化</td></tr>
+                    <tr><td>Q̄</td><td>流量水平</td><td>滑动基准归一化</td></tr>
+                    <tr><td>dQ̄</td><td>流量变化率</td><td>min(变化率/5 L/min/s, 1)</td></tr>
+                    <tr><td>ΔS̄</td><td>土壤 10 分钟涨幅</td><td>min(涨幅/15%, 1)</td></tr>
+                </tbody>
+            </table>
+
+            <h4>2. 山洪路径</h4>
+            <div class="code-block">F = 0.60 × Q̄ + 0.40 × dQ̄</div>
+            <p>不受土壤门槛限制，流量暴涨即触发。</p>
+
+            <h4>3. 风速路径</h4>
+            <table>
+                <thead><tr><th>风速</th><th>等级</th></tr></thead>
+                <tbody>
+                    <tr><td>≥ 25 km/h</td><td>三级</td></tr>
+                    <tr><td>≥ 40 km/h</td><td>二级</td></tr>
+                    <tr><td>≥ 60 km/h</td><td>一级</td></tr>
+                </tbody>
+            </table>
+
+            <h4>4. 流量尖峰路径</h4>
+            <p>每秒流量变化率与当地 24h 历史分布对比，超 P95 视为高风险。spike_risk ≥ 0.8 → 三级；≥ 1.0 → 二级。</p>
+
+            <h4>5. 突变路径（秒级响应）</h4>
+            <p>土壤 5 秒内涨 ≥ 20% → 立即三级；风速 60 秒内涨 ≥ 12 km/h → 立即三级。</p>
+
+            <h3>三、滑动基准</h3>
+            <p>24 小时窗口，每分钟采样 1 点。把当前值映射到该地点历史 [P10, P95] 区间的 0~1 相对位置，自适应当地气候。</p>
+
+            <h3>四、优势</h3>
+            <ul>
+                <li>自适应强：滑动基准让同一套算法在不同气候区都能用</li>
+                <li>多路径互不干扰：一条失灵不影响其他</li>
+                <li>突变秒级响应：突发场景不用等 5-10 分钟窗口</li>
+                <li>简单直观：全部是加权+阈值，好部署、好调试</li>
+                <li>冷启动可用：基准数据不足时自动回退绝对值</li>
+            </ul>
+
+            <h3>五、缺陷</h3>
+            <ul>
+                <li>山洪曼宁 70% 分量缺失（缺超声波水位传感器）</li>
+                <li>风速阈值固定，未按当地风气候做滑动基准</li>
+                <li>土壤 <60% 硬门槛可能漏报</li>
+                <li>冷启动窗口期 2 小时</li>
+                <li>流量传感器量程窄（YF-S401 仅 0.3-3 L/min）</li>
+                <li>分级是硬阈值，无置信度输出</li>
+            </ul>
+        </div>
+
+        <div class="section" id="algorithm-v2">
+            <h2>算法 v2 技术文档</h2>
+            <p><strong>版本：</strong>v2（第二版）<br><strong>算法名称：</strong>传感器标定对齐 + 快速滑动基准预警模型</p>
+
+            <h3>一、v2 相对 v1 的改动</h3>
+            <table>
+                <thead><tr><th>项目</th><th>v1</th><th>v2</th><th>原因</th></tr></thead>
+                <tbody>
+                    <tr><td>预警等级命名</td><td>1=三级 / 3=一级</td><td>0=正常 / 1=一级 / 2=二级 / 3=三级</td><td>等级体系规范：数字越大越严重</td></tr>
+                    <tr><td>泥石流权重</td><td>0.40S+0.30Q+0.20dQ+0.10ΔS</td><td>0.30S+0.35Q+0.20dQ+0.15ΔS</td><td>土壤易饱和降权重；流量升最高权重</td></tr>
+                    <tr><td>Q_MAX</td><td>30 L/min</td><td>3 L/min</td><td>对齐 YF-S401 实测量程</td></tr>
+                    <tr><td>DQ_MAX</td><td>5 L/min/s</td><td>0.5 L/min/s</td><td>实测秒级跳变 ~0.3</td></tr>
+                    <tr><td>冷启动</td><td>2 小时</td><td>15 分钟</td><td>更快自适应当地气候</td></tr>
+                </tbody>
+            </table>
+
+            <h3>二、算法结构</h3>
+            <div class="code-block">最终等级 = max(泥石流 D, 山洪 F, 风速, 流量尖峰, 突变, 土壤饱和)   ← 0~3</div>
+            <table>
+                <thead><tr><th>等级</th><th>含义</th><th>触发示例</th></tr></thead>
+                <tbody>
+                    <tr><td>0</td><td>正常</td><td>各因子均低于阈值</td></tr>
+                    <tr><td>1</td><td>一级预警（最轻）</td><td>D/F ≥ 0.45，或风速 ≥25 km/h</td></tr>
+                    <tr><td>2</td><td>二级预警</td><td>D/F ≥ 0.55，或风速 ≥40 km/h</td></tr>
+                    <tr><td>3</td><td>三级预警（最严重）</td><td>D/F ≥ 0.75，或风速 ≥60 km/h</td></tr>
+                </tbody>
+            </table>
+
+            <h4>1. 泥石流路径</h4>
+            <div class="code-block">D = 0.30 × S̄ + 0.35 × Q̄ + 0.20 × dQ̄ + 0.15 × ΔS̄</div>
+            <p>土壤 <60% 时跳过（山洪/风速不受限）。</p>
+
+            <h4>2. 山洪路径（独立指数）</h4>
+            <div class="code-block">F = 0.60 × Q̄ + 0.40 × dQ̄</div>
+            <p>不受土壤门槛限制，流量暴涨即触发。</p>
+
+            <h4>3. 风速路径</h4>
+            <p>≥25 km/h → 一级；≥40 km/h → 二级；≥60 km/h → 三级。</p>
+
+            <h4>4. 流量尖峰路径</h4>
+            <p>秒级变化率超当地历史 P95 → 二级；≥0.8 归一化 → 一级。</p>
+
+            <h4>5. 突变路径（秒级响应）</h4>
+            <p>土壤 5 秒内涨 ≥20% / 风速 60 秒内涨 ≥12 km/h → 立即一级。</p>
+
+            <h4>6. 土壤饱和路径（v2 新增）</h4>
+            <p>土壤 ≥85% 或超当地 P90 → 至少一级（不依赖流量）。</p>
+
+            <h4>7. 滞回保持（v2 新增，防抖）</h4>
+            <p>升级立即生效；降级需超过保持时间 —— 一级 10 秒 / 二级 15 秒 / 三级 20 秒。</p>
+
+            <h3>三、LCD 显示（v2 新增）</h3>
+            <div class="code-block">W12.3 S45% F0.50     ← 风速 km/h · 土湿度 % · 水流速 L/min
+ALARM:3 L3           ← 预警等级 0~3（0=正常，3=三级最严重）</div>
+
+            <h3>四、优势</h3>
+            <ul>
+                <li>流量数据真正参与推理：标定参数对齐传感器量程后，Q̄/dQ̄ 变成有效因子</li>
+                <li>滑动基准快速启用：15 分钟冷启动</li>
+                <li>等级体系规范：0~3 数字越大越严重</li>
+                <li>现场可视化：LCD 实时显示四路核心数据</li>
+                <li>诊断能力：脉冲双向沿计数 + 电平输出</li>
+            </ul>
+
+            <h3>五、缺陷</h3>
+            <ul>
+                <li>流量计量程仍窄（YF-S401 仅 0.05~3 L/min）</li>
+                <li>风速数据依赖外部电脑（192.168.1.200:8001）</li>
+                <li>滑动基准 15 分钟仍可能不够稳</li>
+                <li>突变阈值仍是经验值</li>
+                <li>LCD 仅 ASCII，无法显示中文</li>
+            </ul>
+        </div>
+
+        <div class="section" id="weather">
+            <h2>风速+温湿度模块</h2>
+            <p>王立辉负责。野外溪流/漂流点山洪智能监测预警系统 —— 风速 + 温湿度监测单元。</p>
+
+            <h3>模块组成</h3>
+            <table>
+                <thead><tr><th>文件</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>01_WindSensor.ino</td><td>风速传感器基础版：三杯式风速计 → 风速 km/h / m/s，超 10 km/h 板载 LED 报警</td></tr>
+                    <tr><td>wind_server.py</td><td>基础版配套转发服务：读串口 → HTTP :8001/wind 返回 JSON</td></tr>
+                    <tr><td>风速+温湿度/</td><td>完整版：风速 + DHT11 温湿度 + 网页仪表盘 + 智能预警</td></tr>
+                </tbody>
+            </table>
+
+            <h3>硬件接线</h3>
+            <ul>
+                <li>风速传感器：红线 → A0，黑线 → GND（三杯式风速计，0~5V 模拟输出）</li>
+                <li>DHT11：v → 5V，s → D4，g → GND</li>
+                <li>报警 LED：板载 D13</li>
+            </ul>
+
+            <h3>运行方式</h3>
+            <div class="code-block"># 1. 烧录 Arduino（完整版）
+#    Arduino IDE 打开 风速+温湿度/02_WindTempHumidity.ino，选 Arduino UNO + 对应端口
+#    波特率 9600，串口输出 CSV：电压,风速,温度,湿度
+
+# 2. 启动转发服务（8001 端口）
+cd 风速+温湿度/server
+python3 wind_server.py
+
+# 3. 启动网页仪表盘（3000 端口）
+npm install
+node server.js
+# 浏览器打开 http://localhost:3000</div>
+
+            <h3>架构</h3>
+            <div class="code-block">Arduino UNO（串口 9600，CSV 输出）
+   │
+   ▼
+wind_server.py ── 独占串口，解析数据，缓存最新值
+   │              HTTP :8001/wind → {"wind_kmh","wind_ms","temp","hum","time"}
+   ▼
+server.js ── 每 1 秒轮询 8001，加分预警引擎 + SSE 推送
+   │
+   ▼
+浏览器 http://localhost:3000（仪表盘：风速曲线 / 温湿度 / 阵风 / 30 分钟基准线 / 分级预警）</div>
+
+            <h3>与综合监控联动</h3>
+            <p>本模块的 http://&lt;风速电脑IP&gt;:8001/wind JSON 接口被综合监控网页（土壤湿度 + 流速 + 水泵）调用，显示风速、温度、湿度；10 秒无响应自动判为离线。</p>
+
+            <h3>备注</h3>
+            <ul>
+                <li>wind_server.py（模块根目录）为基础版配套服务，只解析 01_WindSensor.ino 的文本格式</li>
+                <li>风速+温湿度/server/wind_server.py 为完整版，同时兼容文本格式和 CSV 格式</li>
+                <li>接线图见 风速+温湿度/图片1~3.jpg</li>
+            </ul>
+        </div>
+    </main>
+    <script>
+        document.querySelectorAll('.foldable-title').forEach(function(title) {
+            title.addEventListener('click', function() {
+                this.parentElement.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>
