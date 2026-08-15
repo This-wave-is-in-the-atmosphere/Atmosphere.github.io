@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmosphere - 野外溪流/漂流点山洪与泥石流智能监测预警系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #000;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 200;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header span {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item > a {
+            font-size: 14px;
+            color: #333;
+            padding: 8px 12px;
+            display: inline-block;
+        }
+
+        .nav-item:hover > a {
+            color: #000;
+        }
+
+        .nav-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            min-width: 180px;
+            padding: 8px 0;
+            z-index: 300;
+        }
+
+        .nav-item:hover .nav-dropdown {
+            display: block;
+        }
+
+        .nav-dropdown a {
+            display: block;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .nav-dropdown a:hover {
+            background: #f5f5f5;
+        }
+
+        .github-link {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+        }
+
+        .github-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #333;
+            background: #fff;
+        }
+
+        .github-link a:hover {
+            border-color: #333;
+            background: #f5f5f5;
+        }
+
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 600;
+            letter-spacing: -2px;
+            margin-bottom: 16px;
+            color: #111;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #666;
+            max-width: 600px;
+        }
+
+        .section {
+            padding: 80px 0;
+            border-top: 1px solid #eee;
+            text-align: left;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #111;
+        }
+
+        .section p {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 16px;
+        }
+
+        .highlight {
+            color: #000;
+            font-weight: 500;
+        }
+
+        .warning {
+            background: #f8f8f8;
+            border-left: 2px solid #ccc;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .start-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #333;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            margin-top: 40px;
+        }
+
+        .start-btn:hover {
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .header {
+                padding: 0 20px;
+            }
+
+            .header-nav {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <span>Atmosphere</span>
+        </div>
+        <nav class="header-nav">
+            <div class="nav-item">
+                <a href="#top">主页</a>
+            </div>
+            <div class="nav-item">
+                <a href="#intro">简介</a>
+            </div>
+            <div class="nav-item">
+                <a href="#features">优势</a>
+            </div>
+            <div class="nav-item">
+                <a href="#hardware">硬件</a>
+            </div>
+            <div class="nav-item">
+                <a href="#model">模型</a>
+            </div>
+            <div class="nav-item">
+                <a href="#quickstart">快速开始</a>
+            </div>
+            <div class="nav-item">
+                <a href="#">文档 ▾</a>
+                <div class="nav-dropdown">
+                    <a href="start.html#structure">项目结构</a>
+                    <a href="start.html#history">版本历史</a>
+                    <a href="start.html#docs">文档索引</a>
+                    <a href="start.html#limitations">已知限制</a>
+                    <a href="start.html#faq">常见问题</a>
+                    <a href="start.html#development">二次开发</a>
+                    <a href="start.html#contributing">贡献</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="github-link">
+        <a href="https://github.com/liangaustin/Atmosphere" target="_blank">
+            <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="hero" id="top">
+            <h1>Atmosphere</h1>
+            <p>微型野外溪流 / 漂流点山洪与泥石流智能监测预警系统</p>
+            <a href="start.html" class="start-btn">开始 →</a>
+        </div>
+
+        <div class="section" id="intro">
+            <h2>简介</h2>
+            <p>
+                <strong>Atmosphere</strong> 是一套面向<span class="highlight">民间自发漂流活动与野外游泳区域</span>的低成本、高实效智能监测预警系统。
+            </p>
+            <p>
+                它通过部署在溪流/漂流点的传感器单元，实时采集<span class="highlight">土壤湿度、水流速、风速、温湿度</span>等环境数据，用多因子数学模型判定山洪与泥石流风险等级（<span class="highlight">0~3 级</span>），并通过<span class="highlight">网页监控 + 现场 LCD</span> 双端呈现，在危险来临前为现场人员争取撤离时间。
+            </p>
+            <div class="warning">
+                ⚠️ 本系统是辅助决策工具，不替代救生员与现场安全管理。山洪预警的黄金法则是上游预警——请结合上游雨量/水位遥测站构成完整预警链。
+            </div>
+        </div>
+
+        <div class="section" id="features">
+            <h2>优势</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>实时监测</h3>
+                    <p>多传感器同步采集土壤湿度、水流速、风速、温湿度等环境数据</p>
+                </div>
+                <div class="feature">
+                    <h3>智能预警</h3>
+                    <p>多因子数学模型判定山洪与泥石流风险等级（0~3级）</p>
+                </div>
+                <div class="feature">
+                    <h3>双端呈现</h3>
+                    <p>网页监控+现场LCD双通道预警，确保信息及时送达</p>
+                </div>
+                <div class="feature">
+                    <h3>低成本</h3>
+                    <p>采用开源硬件方案，适合民间自发漂流活动区域部署</p>
+                </div>
+                <div class="feature">
+                    <h3>高时效</h3>
+                    <p>在危险来临前为现场人员争取宝贵撤离时间</p>
+                </div>
+                <div class="feature">
+                    <h3>易部署</h3>
+                    <p>模块化设计，快速部署于溪流、漂流点及野外游泳区域</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="hardware">
+            <h2>硬件方案</h2>
+            <p>传感器单元单点成本约 300-400 元，包含以下组件：</p>
+            <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;">
+                <thead>
+                    <tr>
+                        <th style="border:1px solid #eee;padding:12px 16px;text-align:left;background:#f8f8f8;">部件</th>
+                        <th style="border:1px solid #eee;padding:12px 16px;text-align:left;background:#f8f8f8;">型号</th>
+                        <th style="border:1px solid #eee;padding:12px 16px;text-align:left;background:#f8f8f8;">接线</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #eee;padding:12px 16px;">主控 MCU</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">Arduino Nano（ATmega328P，115200）</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">FQBN arduino:avr:nano:cpu=atmega328</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #eee;padding:12px 16px;">土壤湿度</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">电容式</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">AO→A2，DO→D2</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #eee;padding:12px 16px;">水流速</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">YF-S401 霍尔流量计</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">红→5V，黄→D8，黑→GND</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #eee;padding:12px 16px;">风速</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">三杯式风速计</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">红→A0，黑→GND</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #eee;padding:12px 16px;">温湿度</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">DHT11</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">s→D4</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #eee;padding:12px 16px;">现场显示</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">1602 I2C（地址 0x27）</td>
+                        <td style="border:1px solid #eee;padding:12px 16px;">SCL→A5，SDA→A4</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="warning">
+                ⚠️ 供电铁律：水泵必须独立供电（单独 5V 电源，只共地）。从 Arduino 5V 取电会拉垮 5V → CH340 掉电 → 板子复位断联。
+            </div>
+        </div>
+
+        <div class="section" id="model">
+            <h2>预警模型</h2>
+            <p>等级体系（数字越大越严重）：<span class="highlight">0 = 正常 / 1 = 一级 / 2 = 二级 / 3 = 三级</span></p>
+            <div style="background:#f8f8f8;padding:20px;border-radius:8px;font-family:monospace;font-size:14px;margin:20px 0;overflow-x:auto;white-space:pre;">最终等级 = max(泥石流 D, 山洪 F, 风速, 流量尖峰, 突变, 土壤饱和)   ← 0~3
+
+泥石流 D = 0.30·S̄ + 0.35·Q̄ + 0.20·dQ̄ + 0.15·ΔS̄   （土壤 <60% 时跳过）
+山洪 F = 0.60·Q̄ + 0.40·dQ̄                         （流量暴涨即触发）
+
+阈值：D/F ≥ 0.45 → 一级；≥ 0.55 → 二级；≥ 0.75 → 三级</div>
+            <p>滑动基准：24h 窗口 [P10,P95] 归一化，冷启动 15 分钟。</p>
+            <p>滞回防抖：预警触发后保持（一级 10s / 二级 15s / 三级 20s），避免等级闪烁。</p>
+        </div>
+
+        <div class="section" id="quickstart">
+            <h2>快速开始</h2>
+            <div style="background:#f8f8f8;padding:24px;border-radius:8px;font-family:monospace;font-size:14px;overflow-x:auto;white-space:pre;line-height:1.8;"># 1. 烧录固件（Arduino IDE，板卡 Nano + 新 Bootloader，115200）
+#    demo1/zh-CN/第二版算法部分/beta5/FlowSensor.ino
+
+# 2. 启动服务端（串口）
+cd demo1/zh-CN/第二版算法部分/beta5/
+python3 -u server.py
+
+# 3. 打开网页
+http://localhost:8080</div>
+        </div>
+
+        <div class="section" id="contact">
+            <h2>联系我们</h2>
+            <p>如需联系开发团队，请发送电子邮件到：<a href="mailto:liangaustin@hotmail.com">liangaustin@hotmail.com</a></p>
+        </div>
+
+        <div class="footer">
+            <p>Copyright © Thin-Wave-Is-In-The-Atmosphere 2026-2027</p>
+        </div>
+    </div>
+</body>
+</html>

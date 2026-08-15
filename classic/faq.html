@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见问题 - Atmosphere</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; display: flex; min-height: 100vh; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .sidebar { width: 280px; min-width: 280px; background: #f8f8f8; border-right: 1px solid #e0e0e0; padding: 24px 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; }
+        .sidebar-header { padding: 0 24px 24px; border-bottom: 1px solid #e0e0e0; margin-bottom: 16px; }
+        .sidebar-header a { font-size: 16px; font-weight: 600; color: #333; }
+        .sidebar-section { margin-bottom: 8px; }
+        .sidebar-section-title { padding: 8px 24px; font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; }
+        .sidebar-section a { display: block; padding: 8px 24px; font-size: 14px; color: #333; }
+        .sidebar-section a:hover { background: #eee; text-decoration: none; }
+        .sidebar-section a.active { background: #e0e0e0; color: #0066cc; }
+        .main-content { flex: 1; margin-left: 280px; padding: 60px 80px; max-width: 900px; }
+        .section h2 { font-size: 28px; font-weight: 600; margin-bottom: 24px; color: #111; }
+        .faq-item { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #eee; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-item h3 { margin: 0 0 8px; font-size: 15px; color: #111; }
+        .faq-item p { margin: 0; font-size: 14px; color: #666; }
+        .github-link { position: fixed; bottom: 24px; right: 24px; z-index: 100; }
+        .github-link a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; color: #333; background: #fff; }
+        .github-link a:hover { border-color: #333; background: #f5f5f5; text-decoration: none; }
+        @media (max-width: 1024px) { .sidebar { display: none; } .main-content { margin-left: 0; padding: 0 40px 40px; } }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="index.html">Atmosphere</a></div>
+        <div class="sidebar-section">
+            <a href="index.html">主页</a>
+            <a href="intro.html">简介</a>
+            <a href="features.html">优势</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">硬件与模型</div>
+            <a href="hardware.html">硬件方案</a>
+            <a href="model.html">预警模型</a>
+            <a href="quickstart.html">快速开始</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">文档</div>
+            <a href="structure.html">项目结构</a>
+            <a href="history.html">版本历史</a>
+            <a href="docs.html">文档索引</a>
+            <a href="limitations.html">已知限制</a>
+            <a href="faq.html" class="active">常见问题</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">开发</div>
+            <a href="development.html">二次开发</a>
+            <a href="contributing.html">贡献</a>
+            <a href="contact.html">联系我们</a>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">技术文档</div>
+            <a href="algorithm-v1.html">算法 v1</a>
+            <a href="algorithm-v2.html">算法 v2</a>
+            <a href="weather.html">风速+温湿度</a>
+        </div>
+    </aside>
+    <div class="github-link"><a href="https://github.com/liangaustin/Atmosphere" target="_blank"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub</a></div>
+    <main class="main-content">
+        <div class="section">
+            <h2>常见问题</h2>
+            <div class="faq-item">
+                <h3>Q1：水泵一开 Arduino 就重启/断连？</h3>
+                <p>水泵不能从 Arduino 5V 取电（会拉垮 5V → CH340 掉电 → 板子复位）。必须独立 5V 电源，GND 与 Arduino 共地，D9 只发 PWM 信号。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q2：LCD 不亮 / 花屏？</h3>
+                <p>① 检查 I2C 地址（默认 0x27）；② 确认 SCL→A5、SDA→A4 没接反；③ 旋转背光电位器调对比度。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q3：流速一直为 0？</h3>
+                <p>YF-S401 最小启动流量 0.3 L/min，低于此值转子不转（吹气测不了，必须通水）。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q4：风速数值异常 / 静止也有读数？</h3>
+                <p>三杯式风速计部分型号存在零点偏移，可在固件里做零点校准。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q5：预警一直不触发？</h3>
+                <p>① 土壤 <60% 时泥石流路径跳过（正常）；② 滑动基准冷启动需 15 分钟；③ 检查 D/F 数值是否在阈值附近（0.45/0.55/0.75）。</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
