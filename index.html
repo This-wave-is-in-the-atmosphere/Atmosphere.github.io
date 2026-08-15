@@ -179,6 +179,10 @@
             margin-bottom: 16px;
         }
 
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin: 20px 0; }
+        .demo-grid figure { margin: 0; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
+        .demo-grid img { width: 100%; height: 180px; object-fit: cover; display: block; }
+        .demo-grid figcaption { padding: 8px 12px; font-size: 13px; color: #666; text-align: center; }
         .highlight {
             color: #000;
             font-weight: 500;
@@ -428,6 +432,17 @@ python3 -u server.py
 
 # 3. 打开网页
 http://localhost:8080</div>
+        </div>
+
+        <div class="section" id="demo">
+            <h2>项目 Demo 图片</h2>
+            <div class="demo-grid">
+                <figure><img src="images/web-dashboard.png" alt="综合监控网页"><figcaption>综合监控网页 · Web Dashboard</figcaption></figure>
+                <figure><img src="images/wild-swimming.jpg" alt="野泳现场"><figcaption>溪流野泳 · Wild Swimming</figcaption></figure>
+                <figure><img src="images/rafting.jpg" alt="漂流现场"><figcaption>白水漂流 · Rafting</figcaption></figure>
+                <figure><img src="images/flash-flood.jpg" alt="山洪现场"><figcaption>山洪现场 · Flash Flood</figcaption></figure>
+                <figure><img src="images/mudslide.jpg" alt="泥石流现场"><figcaption>泥石流现场 · Debris Flow</figcaption></figure>
+            </div>
         </div>
 
         <div class="section" id="contact">
