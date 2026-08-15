@@ -22,6 +22,12 @@
         .footer { text-align: center; padding: 24px 16px 30px; font-size: 12px; color: #546e7a; }
         .footer a { color: #4fc3f7; text-decoration: none; }
         .warn { margin: 0 16px 18px; padding: 12px 14px; background: #2a1a10; border: 1px solid #4a2a10; border-radius: 10px; font-size: 12px; color: #ffb74d; line-height: 1.6; }
+        .gallery { margin: 0 16px 18px; }
+        .gallery h2 { font-size: 15px; color: #4fc3f7; margin-bottom: 10px; }
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .gallery-grid figure { margin: 0; background: #16283a; border-radius: 10px; overflow: hidden; border: 1px solid #1e3a4e; }
+        .gallery-grid img { width: 100%; height: 120px; object-fit: cover; display: block; }
+        .gallery-grid figcaption { padding: 6px 8px; font-size: 11px; color: #78909c; text-align: center; }
     </style>
 </head>
 <body>
@@ -43,6 +49,19 @@
 
     <div class="warn">
         ⚠️ 本系统是辅助决策工具，不替代救生员与现场安全管理。山洪预警的黄金法则是<strong>上游预警</strong>。
+    </div>
+
+    <div class="gallery">
+        <h2>📷 项目 Demo 图片</h2>
+        <div class="gallery-grid">
+            <figure><img src="../images/web-dashboard.png" alt="综合监控网页"><figcaption>综合监控网页</figcaption></figure>
+            <figure><img src="../images/demo-1.jpg" alt="Demo 实拍"><figcaption>Demo 实拍</figcaption></figure>
+            <figure><img src="../images/demo-2.jpg" alt="Demo 实拍"><figcaption>Demo 实拍</figcaption></figure>
+            <figure><img src="../images/demo-3.jpg" alt="Demo 实拍"><figcaption>Demo 实拍</figcaption></figure>
+            <figure><img src="../images/wiring-1.jpg" alt="接线图"><figcaption>接线图</figcaption></figure>
+            <figure><img src="../images/wiring-2.jpg" alt="接线图"><figcaption>接线图</figcaption></figure>
+            <figure><img src="../images/wiring-3.jpg" alt="接线图"><figcaption>接线图</figcaption></figure>
+        </div>
     </div>
 
     <div class="nav">
