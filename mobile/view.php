@@ -5,7 +5,7 @@ require_once __DIR__ . '/../Parsedown.php';
 
 $src = isset($_GET['src']) ? $_GET['src'] : 'main';
 $path = isset($_GET['path']) ? $_GET['path'] : '';
-$base = __DIR__ . '/../_atmosphere-src';
+$base = realpath(__DIR__ . '/../_atmosphere-src');
 $real = realpath($base . '/' . $path);
 if ($real === false || strpos($real, $base . '/') !== 0 || !preg_match('/\.md$/i', $real)) {
     http_response_code(404); exit('文档不存在');
