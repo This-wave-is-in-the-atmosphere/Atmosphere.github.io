@@ -164,7 +164,7 @@
         }
 
         body.photo-mode .hero {
-            padding-bottom: 360px;  /* 渐变区下移到首屏外，下滑才见淡出 */
+            min-height: calc(100vh + 360px);  /* 渐变区下移到首屏外，下滑才见淡出 */
         }
 
         body.photo-mode .hero::before {
@@ -215,7 +215,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            transition: padding-bottom .5s ease;
+            transition: min-height .5s ease;
         }
 
         .hero h1 {
