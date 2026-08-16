@@ -139,7 +139,10 @@
         .hero::before {
             content: "";
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;  /* 背景图只铺首屏，不被下方360px渐变区撑大 */
             background-image: url('images/hero-bg.jpg?v=20260816');
             background-size: cover;
             background-position: center center;
