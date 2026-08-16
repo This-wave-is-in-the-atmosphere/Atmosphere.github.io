@@ -153,30 +153,12 @@
         }
 
         .hero::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 360px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
-            opacity: 0;
-            transition: opacity .6s ease;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        body.photo-mode .hero {
-            min-height: calc(100vh + 360px);  /* 渐变区下移到首屏外，下滑才见淡出；文字位置不变 */
+            display: none;
         }
 
         body.photo-mode .hero::before {
             opacity: .85;  /* 更浓，颜色更深 */
             transform: scale(1);
-        }
-
-        body.photo-mode .hero::after {
-            opacity: 1;
         }
 
         .github-link {
@@ -219,7 +201,6 @@
             padding-top: 34vh;  /* 固定文字位置（视口~44%处），切换模式时文字不动 */
             align-items: center;
             text-align: center;
-            transition: min-height .5s ease;
         }
 
         .hero h1 {
