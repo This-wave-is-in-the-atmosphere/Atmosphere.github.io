@@ -165,6 +165,8 @@
 
         body.photo-mode .hero {
             min-height: calc(100vh + 360px);  /* 渐变区下移到首屏外，下滑才见淡出 */
+            justify-content: flex-start;
+            padding-top: 32vh;  /* 图片版文字上移，简洁版保持居中不受影响 */
         }
 
         body.photo-mode .hero::before {
