@@ -164,9 +164,7 @@
         }
 
         body.photo-mode .hero {
-            min-height: calc(100vh + 360px);  /* 渐变区下移到首屏外，下滑才见淡出 */
-            justify-content: flex-start;
-            padding-top: 32vh;  /* 图片版文字上移，简洁版保持居中不受影响 */
+            min-height: calc(100vh + 360px);  /* 渐变区下移到首屏外，下滑才见淡出；文字位置不变 */
         }
 
         body.photo-mode .hero::before {
@@ -214,7 +212,8 @@
             margin-right: calc(50% - 50vw);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+            padding-top: 34vh;  /* 固定文字位置（视口~44%处），切换模式时文字不动 */
             align-items: center;
             text-align: center;
             transition: min-height .5s ease;
