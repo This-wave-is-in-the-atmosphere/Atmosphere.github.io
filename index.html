@@ -63,6 +63,29 @@
             gap: 8px;
         }
 
+        /* 导航栏居中：简洁版 / 图片版 切换按钮 */
+        .mode-toggle {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+            transition: all .2s ease;
+            white-space: nowrap;
+        }
+
+        .mode-toggle:hover {
+            border-color: #333;
+            background: #f5f5f5;
+        }
+
         .nav-item {
             position: relative;
         }
@@ -105,6 +128,46 @@
 
         .nav-dropdown a:hover {
             background: #f5f5f5;
+        }
+
+        /* 图片版：背景图 + 淡化 + 底部淡出 */
+        .hero {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity .5s ease;
+            z-index: -2;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 220px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+            opacity: 0;
+            transition: opacity .5s ease;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body.photo-mode .hero::before {
+            opacity: .55;  /* 调淡，让 Atmosphere 明显 */
+        }
+
+        body.photo-mode .hero::after {
+            opacity: 1;
         }
 
         .github-link {
@@ -266,6 +329,7 @@
         <div class="header-left">
             <span>AtmoWave Technology</span>
         </div>
+        <button class="mode-toggle" id="modeToggle" onclick="toggleMode()">🌄 图片版</button>
         <nav class="header-nav">
             <div class="nav-item">
                 <a href="#top">主页</a>
@@ -456,5 +520,23 @@ http://localhost:8080</div>
             <p>Copyright © AtmoWave Technology 2026-2027</p>
         </div>
     </div>
+
+    <script>
+        function toggleMode() {
+            var on = document.body.classList.toggle('photo-mode');
+            document.getElementById('modeToggle').textContent = on ? '☁️ 简洁版' : '🌄 图片版';
+            try { localStorage.setItem('atmo-hero-mode', on ? 'photo' : 'plain'); } catch (e) {}
+        }
+
+        // 恢复上次选择（默认简洁版）
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('atmo-hero-mode'); } catch (e) {}
+            if (saved === 'photo') {
+                document.body.classList.add('photo-mode');
+                document.getElementById('modeToggle').textContent = '☁️ 简洁版';
+            }
+        })();
+    </script>
 </body>
 </html>
